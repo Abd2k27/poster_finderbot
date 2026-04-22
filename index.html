@@ -558,10 +558,10 @@
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-  ">📥 Télécharger PNG</button>
+  ">📥 Télécharger PNG (HD)</button>
 
-  <button id="dl-svg-btn" style="
-    background: #28a745;
+  <button id="dl-pdf-btn" style="
+    background: #dc3545;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -571,33 +571,36 @@
     font-weight: 600;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-  ">🎨 Télécharger SVG</button>
+  ">📕 Télécharger PDF (HD)</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script>
-// --- PNG EXPORT ---
+// --- PNG EXPORT (ULTRA HD) ---
 document.getElementById('dl-png-btn').addEventListener('click', async () => {
   const btn = document.getElementById('dl-png-btn');
-  btn.textContent = '⏳ Capture...';
+  btn.textContent = '⏳ Capture HD...';
   btn.disabled = true;
 
   try {
     const poster = document.querySelector('.poster');
     const canvas = await html2canvas(poster, {
-      scale: 2,
+      scale: 4, // Échelle 4x pour une résolution d'impression (300+ DPI)
       allowTaint: true,
       useCORS: true,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      logging: false
     });
 
     const link = document.createElement('a');
-    link.download = 'Finder_bot_Poster.png';
+    link.download = 'Finder_bot_Poster_HD.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
 
-    btn.textContent = '✅ PNG Prêt';
-    setTimeout(() => { btn.textContent = '📥 Télécharger PNG'; btn.disabled = false; }, 2000);
+    btn.textContent = '✅ PNG HD Prêt';
+    setTimeout(() => { btn.textContent = '📥 Télécharger PNG (HD)'; btn.disabled = false; }, 2000);
   } catch (e) {
     console.error(e);
     btn.textContent = '❌ Erreur';
@@ -605,51 +608,29 @@ document.getElementById('dl-png-btn').addEventListener('click', async () => {
   }
 });
 
-// --- SVG EXPORT ---
-document.getElementById('dl-svg-btn').addEventListener('click', () => {
-  const btn = document.getElementById('dl-svg-btn');
-  btn.textContent = '⏳ Génération...';
+// --- PDF EXPORT (PRO / VECTOR) ---
+document.getElementById('dl-pdf-btn').addEventListener('click', () => {
+  const btn = document.getElementById('dl-pdf-btn');
+  btn.textContent = '⏳ Génération PDF...';
   btn.disabled = true;
 
-  try {
-    const poster = document.querySelector('.poster');
-    const width = poster.offsetWidth;
-    const height = poster.offsetHeight;
+  const element = document.querySelector('.poster');
+  const opt = {
+    margin: 0,
+    filename: 'Finder_bot_Poster_Pro.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
 
-    // Clone styles and content
-    const styles = Array.from(document.styleSheets)
-      .filter(s => !s.href || s.href.startsWith(window.location.origin))
-      .map(s => {
-        try { return Array.from(s.cssRules).map(r => r.cssText).join(''); }
-        catch(e) { return ''; }
-      }).join('');
-
-    const data = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-        <foreignObject width="100%" height="100%">
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <style>${styles}</style>
-            ${poster.outerHTML}
-          </div>
-        </foreignObject>
-      </svg>
-    `;
-
-    const blob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = 'Finder_bot_Poster.svg';
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-
-    btn.textContent = '✅ SVG Prêt';
-    setTimeout(() => { btn.textContent = '🎨 Télécharger SVG'; btn.disabled = false; }, 2000);
-  } catch (e) {
-    console.error(e);
+  html2pdf().set(opt).from(element).save().then(() => {
+    btn.textContent = '✅ PDF Prêt';
+    setTimeout(() => { btn.textContent = '📕 Télécharger PDF (HD)'; btn.disabled = false; }, 2000);
+  }).catch(err => {
+    console.error(err);
     btn.textContent = '❌ Erreur';
     btn.disabled = false;
-  }
+  });
 });
 </script>
 
