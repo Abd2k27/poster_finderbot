@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finder_bot – Poster Scientifique A4</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @page { size: A4 portrait; margin: 0; }
+
+  :root {
+    --primary-blue: #0056b3;
+    --dark-blue: #003d82;
+    --light-blue: #e7f1ff;
+    --bg-gray: #f4f7f9;
+    --text-dark: #333;
+    --text-muted: #666;
+    --white: #ffffff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+  }
+
+  body {
+    background: #dde4ed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 0;
+    color: var(--text-dark);
+  }
+
+  .poster {
+    width: 210mm;
+    height: 297mm;
+    background: var(--bg-gray);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ═══════ HEADER ═══════ */
+  .header {
+    background: var(--primary-blue);
+    color: var(--white);
+    padding: 10px 20px 8px;
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 2;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .header-logo-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    min-width: 90px;
+  }
+  .header-logo-block img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+  .header-logo-block span {
+    font-size: 7.5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    opacity: 0.8;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .header-center {
+    flex: 1;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .header h1 {
+    font-size: 17px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .header h1 em {
+    font-style: normal;
+    color: #93c5fd;
+  }
+  .header .subtitle-line {
+    font-size: 9.5px;
+    font-weight: 400;
+    opacity: 0.8;
+    text-align: center;
+    margin-bottom: 3px;
+    font-style: italic;
+  }
+  .header .authors {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: 0;
+  }
+
+  /* ═══════ MAIN ═══════ */
+  .main {
+    flex: 1;
+    padding: 10px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ═══════ PANELS (comme l'app) ═══════ */
+  .panel {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 4px 14px;
+    border-bottom: 1px solid #eee;
+    background: var(--white);
+  }
+  .panel-header h2 {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .panel-header h2 .icon {
+    width: 18px;
+    height: 18px;
+    background: var(--light-blue);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+  .panel-body {
+    padding: 7px 14px;
+  }
+
+  /* ═══════ TWO-COL ═══════ */
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ═══════ TEXT ═══════ */
+  .panel-body p {
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--text-dark);
+  }
+  .panel-body ul {
+    list-style: none;
+    padding: 0;
+  }
+  .panel-body li {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-dark);
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .panel-body li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-blue);
+  }
+  .panel-body strong {
+    color: var(--primary-blue);
+    font-weight: 600;
+  }
+
+  /* ═══════ METHOD CARDS ═══════ */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .method-card {
+    background: var(--light-blue);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .method-card .emoji {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .method-card h3 {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--dark-blue);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .method-card p {
+    font-size: 9.5px;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
+
+  /* ═══════ SCREENSHOT ═══════ */
+  .screenshot-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 16px;
+    align-items: center;
+    background: var(--bg-gray);
+    border-radius: 8px;
+    border: 1.5px solid #dee2e6;
+    padding: 8px;
+    overflow: hidden;
+  }
+  .screenshot-img-box {
+    border-radius: 6px;
+    overflow: hidden;
+    height: 310px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #eee;
+  }
+  .screenshot-img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .screenshot-caption {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.5;
+    text-align: left;
+    border-left: 3px solid var(--primary-blue);
+    padding-left: 12px;
+  }
+
+  /* ═══════ TAKEAWAY ═══════ */
+  .takeaway {
+    background: var(--light-blue);
+    border-left: 4px solid var(--primary-blue);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+  }
+  .takeaway p {
+    font-size: 12px;
+    color: var(--dark-blue);
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  /* ═══════ TECH PILLS ═══════ */
+  .tech-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tech-pill {
+    background: var(--white);
+    border: 1.5px solid #dee2e6;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  /* ═══════ BOTTOM ROW ═══════ */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .eval-block {
+    padding: 8px 10px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+  }
+  .eval-block:last-child { margin-bottom: 0; }
+  .eval-block.good {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+  }
+  .eval-block.limit {
+    background: #fdecea;
+    border: 1px solid #f5c6cb;
+  }
+  .eval-block h4 {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .eval-block.good h4 { color: #155724; }
+  .eval-block.limit h4 { color: #721c24; }
+  .eval-block p {
+    font-size: 10px;
+    line-height: 1.4;
+    color: var(--text-dark);
+  }
+
+  /* ═══════ FOOTER ═══════ */
+  .footer {
+    background: var(--dark-blue);
+    color: var(--white);
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    margin: 8px 16px 12px;
+    border-radius: var(--border-radius);
+  }
+  .footer-text {
+    font-size: 10.5px;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+  .footer-text strong {
+    opacity: 1;
+    display: block;
+    font-size: 12px;
+    color: #93c5fd;
+    margin-bottom: 2px;
+  }
+  .qr-zone {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .qr-label {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: right;
+    color: #93c5fd;
+    letter-spacing: 0.5px;
+  }
+  .qr-img {
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    padding: 2px;
+    border-radius: 6px;
+  }
+  .qr-img img { width: 100%; height: 100%; }
+
+  /* ═══════ PRINT ═══════ */
+  @media print {
+    body { background: none; padding: 0; min-height: auto; }
+    .poster {
+      box-shadow: none;
+      width: 210mm; height: 297mm;
+      min-height: 297mm; max-height: 297mm;
+    }
+    .main { flex: 1; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-top">
+      <div class="header-logo-block">
+        <img src="logo_univ_lille.png" alt="Logo Université de Lille" onerror="this.style.display='none'">
+        <span>Université de Lille · UFR3S</span>
+      </div>
+      <div class="header-center">
+        <h1>Projet HéliSMUR – <em>Finder Bot</em><br><span style="font-size:13px; font-weight:600; color:#cfe2ff;">Application d'aide à la décision pour la géolocalisation d'urgence</span></h1>
+        <div class="authors">Abdou Dossou · Dylan Pin · Djamel Zitouni · Dr Hervé Coadou</div>
+      </div>
+      <div class="header-logo-block">
+        <img src="logo_chu_lille.png" alt="Logo CHU de Lille" onerror="this.style.display='none'">
+        <span>CHU de Lille · SAMU 59</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- CONTEXTE + OBJECTIFS -->
+    <div class="row-2">
+      <div class="panel">
+        <div class="panel-header">
+          <h2><span class="icon">📌</span> Contexte</h2>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>Appelants <strong>désorientés ou stressés</strong> lors d'un appel au 15.</li>
+            <li>Signal GPS et cellulaire limité dans les <strong>zones blanches</strong>.</li>
+            <li>Le téléphone utilisé pour alerter peut être à <strong>distance de la victime</strong>.</li>
+            <li>Chaque minute compte pour diminuer la <strong>morbi-mortalité</strong>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2><span class="icon">🎯</span> Objectif</h2>
+        </div>
+        <div class="panel-body">
+          <p style="margin-bottom:8px">Développer un <strong>agent conversationnel</strong> assistant l'ARM en temps réel pour lever le doute sur la position géographique.</p>
+          <p>Croiser les données <strong>OSRM</strong> (itinéraires) et <strong>OSM</strong> (points d'intérêts) via un <strong>LLM local</strong> pour protéger la confidentialité des données.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MÉTHODOLOGIE -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2><span class="icon">⚙️</span> Méthodologie</h2>
+      </div>
+      <div class="panel-body">
+        <div class="method-grid">
+          <div class="method-card">
+            <span class="emoji">🧠</span>
+            <h3>Agent LLM Local</h3>
+            <p>Modèle GPT OSS orchestrant l'extraction sémantique et la stratégie de dialogue.</p>
+          </div>
+          <div class="method-card">
+            <span class="emoji">📍</span>
+            <h3>Localisation Relative</h3>
+            <p>Position estimée par corrélation vitesse/temps sur le réseau routier OSRM.</p>
+          </div>
+          <div class="method-card">
+            <span class="emoji">🗺️</span>
+            <h3>Correction via POI</h3>
+            <p>Correction spatiale instantanée via les repères visuels cités par l'appelant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAS D'USAGE -->
+    <div class="panel" style="margin-top: 4px;">
+      <div class="panel-header">
+        <h2><span class="icon">📊</span> Cas d'Usage</h2>
+      </div>
+      <div class="panel-body">
+        <div class="screenshot-container">
+          <div class="screenshot-img-box" style="height: 280px;">
+            <img src="Finder_bot.png" alt="Interface Finder_bot">
+          </div>
+          <div class="screenshot-caption">
+            <strong>Interface unifiée :</strong> Formulaire ARM, chatbot intelligent et carte Leaflet dynamique.
+            Visualisation en temps réel de l'itinéraire, de la zone d'incertitude et des points d'intérêts.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="tech-bar" style="align-items: center; gap: 10px;">
+      <span style="font-size: 10px; font-weight: 700; color: var(--dark-blue); text-transform: uppercase;">Outils :</span>
+      <span class="tech-pill">FastAPI / Python</span>
+      <span class="tech-pill">LLM (GPTos / Ollama)</span>
+      <span class="tech-pill">OSRM Engine</span>
+      <span class="tech-pill">SQLite Spatial</span>
+      <span class="tech-pill">Leaflet JS</span>
+    </div>
+
+    <!-- CONCLUSION + ÉVALUATION -->
+    <div class="bottom-row">
+      <div class="panel">
+        <div class="panel-header">
+          <h2><span class="icon">💡</span> Conclusion</h2>
+        </div>
+        <div class="panel-body" style="font-size: 10px; line-height: 1.4;">
+          <ul style="font-size: 10px;">
+            <li><strong>Impact opérationnel :</strong> Réduction de l'incertitude géographique et des délais d'interventions SMUR.</li>
+            <li><strong>Innovation :</strong> Première preuve de concept française utilisant un LLM pour assister la régulation médicale d'urgence.</li>
+            <li><strong>Perspective :</strong> Intégration du module Finder Bot aux services HéliSMUR pour déploiement et test en condition réelle.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2><span class="icon">⚖️</span> Évaluation</h2>
+        </div>
+        <div class="panel-body">
+          <div class="eval-block good">
+            <h4>✓ Forces</h4>
+            <p>Infrastructure locale assurant rapidité d'exécution et confidentialité. Donnée géographique internationale et collaborative.</p>
+          </div>
+          <div class="eval-block limit">
+            <h4>✗ Faiblesses</h4>
+            <p>Sensibilité du modèle aux accents et autres sources de bruit. Dépendance à la connectivité aux serveurs cartographiques.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-text">
+      <strong>Bibliographie</strong>
+    </div>
+    <div class="qr-zone">
+      <div style="text-align:right; font-size:8.5px; color:#93c5fd; line-height:1.8;">
+        <div style="font-weight:700; font-size:9px; margin-bottom:4px;">Contact</div>
+        abdou.dossou.etu@univ-lille.fr<br>
+        dylan.pin.etu@univ-lille.fr
+      </div>
+      <div class="qr-label" style="margin-left:24px;">Voir<br>Plus</div>
+      <div class="qr-img" style="margin-left:10px;">
+        <img src="qrcode.jpeg" alt="QR Code">
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- BOUTON DOWNLOAD (caché à l'impression) -->
+<button id="dl-btn" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0056b3;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  z-index: 9999;
+">📥 Télécharger PNG</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+document.getElementById('dl-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('dl-btn');
+  btn.textContent = '⏳ Capture en cours...';
+  btn.disabled = true;
+
+  try {
+    const poster = document.querySelector('.poster');
+    const canvas = await html2canvas(poster, {
+      scale: 2,
+      allowTaint: true,
+      useCORS: false,
+      backgroundColor: '#ffffff',
+      logging: true,
+      imageTimeout: 15000,
+      width: poster.scrollWidth,
+      height: poster.scrollHeight
+    });
+
+    canvas.toBlob(function(blob) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'Finder_bot_Poster_A4.png';
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      btn.textContent = '✅ Téléchargé !';
+      setTimeout(() => { btn.textContent = '📥 Télécharger PNG'; btn.disabled = false; }, 2000);
+    }, 'image/png');
+  } catch (e) {
+    console.error('Erreur html2canvas:', e);
+    btn.textContent = '❌ Erreur - voir console';
+    setTimeout(() => { btn.textContent = '📥 Télécharger PNG'; btn.disabled = false; }, 3000);
+  }
+});
+</script>
+
+<style>
+  @media print { #dl-btn { display: none !important; } }
+</style>
+</body>
+</html>
